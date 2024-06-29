@@ -136,7 +136,7 @@ FOREIGN KEY (BookID) REFERENCES Books(BookID)
 
 ### DDL/DML queries for one of the table(Customers).
 
--- Insert data into Customers table
+## Insert query
 INSERT INTO Customers (CustomerID, FirstName, LastName, Email, Password, Address, PhoneNumber) VALUES
 (1, 'Manav', 'Doe', 'manav.doe@example.com', 'password123', '123 Maple Street', '555-1234'),
 (2, 'Mayank', 'Smith', 'mayank.smith@example.com', 'password456', '456 Oak Avenue', '555-5678'),
@@ -155,8 +155,13 @@ SELECT * FROM Customers;
 ### Select a specific customer by ID
 SELECT * FROM Customers WHERE CustomerID = 1;
 
- ### Update a customer's email by using there customer Id.
+ ### Update query for a customer's email by using there customer Id.
 UPDATE Customers
 SET Email = 'john.doe@newexample.com'
 WHERE CustomerID = 1;
+
+### Delete a customer by ID
+DELETE FROM Customers
+WHERE CustomerID = 10;
+
 
