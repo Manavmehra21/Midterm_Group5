@@ -94,7 +94,7 @@ BookID INT PRIMARY KEY,
 Title VARCHAR(100),
 ISBN VARCHAR(20) UNIQUE,
 Genre VARCHAR(50),
-Format VARCHAR(10),  -- Changed ENUM to VARCHAR
+Format VARCHAR(10),  
 Price DECIMAL(10, 2),
 PublisherID INT,
 AuthorID INT,
