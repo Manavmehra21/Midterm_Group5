@@ -63,7 +63,7 @@
 - `Quantity` INT
 - `Price` DECIMAL(10, 2),  
 
-###Sql Queries for creating above mentioned tables in Database
+### Sql Queries for creating above mentioned tables in Database
 
 CREATE TABLE Customers ( 
 CustomerID INT PRIMARY KEY,
