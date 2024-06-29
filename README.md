@@ -5,7 +5,7 @@
 - **Database Design**: Manav Mehra
 - **Database Implementation**: Mayank Sharma
 - **Query Development**: Emmanuella Owulu Amara
-- **API Development**: Manav, Mayank and Amara
+- **Typescript Interface**: Manav, Mayank 
 
 ## Database Tables and Attributes
 
