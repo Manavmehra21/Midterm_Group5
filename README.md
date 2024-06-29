@@ -134,9 +134,9 @@ FOREIGN KEY (OrderID) REFERENCES Orders(OrderID),
 FOREIGN KEY (BookID) REFERENCES Books(BookID)
  );
 
-### DDL/DML queries for one of the table(Customers).
+## DDL/DML queries for one of the table(Customers).
 
-## Insert query
+### Insert query
 INSERT INTO Customers (CustomerID, FirstName, LastName, Email, Password, Address, PhoneNumber) VALUES
 (1, 'Manav', 'Doe', 'manav.doe@example.com', 'password123', '123 Maple Street', '555-1234'),
 (2, 'Mayank', 'Smith', 'mayank.smith@example.com', 'password456', '456 Oak Avenue', '555-5678'),
