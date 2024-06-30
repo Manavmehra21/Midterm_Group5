@@ -178,6 +178,7 @@ GROUP BY a.AuthorID, a.FirstName, a.LastName, b.Genre , b.ReleaseDate
 HAVING COUNT(b.BookID) > 0
 
 Case 2 : Loyal Customers who has spent more than X dollars in the last year.
+
 SELECT
     c.CustomerID,
     c.FirstName,
@@ -191,6 +192,7 @@ HAVING SUM(o.TotalAmount) > 10
 ORDER BY TotalSpent DESC
 
 Case 3:Well Reviewed books that has a better user rating than average.
+
 SELECT 
     b.BookID,
     b.Title,
@@ -204,6 +206,7 @@ HAVING  AVG(r.Rating) > (
     );
 
 Case 4 : The most popular genre by sales.
+
 SELECT
     b.Genre,
     SUM(od.Quantity * od.Price) AS TotalSales
@@ -215,6 +218,7 @@ ORDER BY TotalSales DESC
 LIMIT 1;
 
 case5:he 10 most recent posted reviews by Customers.
+
 SELECT 
     r.ReviewID, 
     r.BookID, 
