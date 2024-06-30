@@ -165,3 +165,70 @@ DELETE FROM Customers
 WHERE CustomerID = 10;
 
 
+## SQL Queries
+
+CASE 1:Power writers (authors) with more than X books in the same genre published within the last X years.
+
+SELECT a.AuthorID, a.FirstName, a.LastName, b.Genre, COUNT(b.BookID) AS BookCount, b.ReleaseDate
+FROM Authors a 
+JOIN Books b ON a.AuthorID = b.AuthorID 
+WHERE b.genre= 'Fantasy'
+AND b.ReleaseDate >= NOW() - INTERVAL '19 years'
+GROUP BY a.AuthorID, a.FirstName, a.LastName, b.Genre , b.ReleaseDate
+HAVING COUNT(b.BookID) > 0
+
+Case 2 : Loyal Customers who has spent more than X dollars in the last year.
+SELECT
+    c.CustomerID,
+    c.FirstName,
+    c.LastName,
+    SUM(o.TotalAmount) AS TotalSpent
+FROM Customers c
+JOIN Orders o ON c.CustomerID = o.CustomerID 
+WHERE o.OrderDate >= NOW() - INTERVAL '22 year'
+GROUP BY c.CustomerID, c.FirstName, c.LastName
+HAVING SUM(o.TotalAmount) > 10
+ORDER BY TotalSpent DESC
+
+Case 3:Well Reviewed books that has a better user rating than average.
+SELECT 
+    b.BookID,
+    b.Title,
+    b.Genre,
+    AVG(r.Rating) AS AvgBookRating
+FROM Books b
+JOIN Reviews r ON b.BookID = r.BookID
+GROUP BY  b.BookID, b.Title, b.Genre
+HAVING  AVG(r.Rating) > (
+        SELECT AVG(Rating) FROM Reviews
+    );
+
+Case 4 : The most popular genre by sales.
+SELECT
+    b.Genre,
+    SUM(od.Quantity * od.Price) AS TotalSales
+FROM Books b
+JOIN OrderDetails od ON b.BookID = od.BookID
+JOIN Orders o ON od.OrderID = o.OrderID
+GROUP BY b.Genre
+ORDER BY TotalSales DESC
+LIMIT 1;
+
+case5:he 10 most recent posted reviews by Customers.
+SELECT 
+    r.ReviewID, 
+    r.BookID, 
+    b.Title AS BookTitle, 
+    r.CustomerID, 
+    c.FirstName, 
+    c.LastName, 
+    r.Rating, 
+    r.Comment, 
+    r.ReviewDate 
+FROM Reviews r 
+JOIN Customers c ON r.CustomerID = c.CustomerID 
+JOIN Books b ON r.BookID = b.BookID 
+ORDER BY r.ReviewDate DESC 
+LIMIT 5;
+
+
