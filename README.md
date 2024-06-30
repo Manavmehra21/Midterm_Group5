@@ -175,7 +175,7 @@ JOIN Books b ON a.AuthorID = b.AuthorID
 WHERE b.genre= 'Fantasy'
 AND b.ReleaseDate >= NOW() - INTERVAL '19 years'
 GROUP BY a.AuthorID, a.FirstName, a.LastName, b.Genre , b.ReleaseDate
-HAVING COUNT(b.BookID) > 0
+HAVING COUNT(b.BookID) > 0;
 
 Case 2 : Loyal Customers who has spent more than X dollars in the last year.
 
@@ -189,7 +189,7 @@ JOIN Orders o ON c.CustomerID = o.CustomerID
 WHERE o.OrderDate >= NOW() - INTERVAL '22 year'
 GROUP BY c.CustomerID, c.FirstName, c.LastName
 HAVING SUM(o.TotalAmount) > 10
-ORDER BY TotalSpent DESC
+ORDER BY TotalSpent DESC;
 
 Case 3:Well Reviewed books that has a better user rating than average.
 
