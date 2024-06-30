@@ -217,7 +217,7 @@ GROUP BY b.Genre
 ORDER BY TotalSales DESC
 LIMIT 1;
 
-case5:he 10 most recent posted reviews by Customers.
+case5: The 10 most recent posted reviews by Customers.
 
 SELECT 
     r.ReviewID, 
