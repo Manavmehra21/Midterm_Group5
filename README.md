@@ -138,6 +138,7 @@ FOREIGN KEY (BookID) REFERENCES Books(BookID)
 ## DDL/DML queries for one of the table(Customers).
 
 ### Insert query
+```sql
 INSERT INTO Customers (CustomerID, FirstName, LastName, Email, Password, Address, PhoneNumber) VALUES
 (1, 'Manav', 'Doe', 'manav.doe@example.com', 'password123', '123 Maple Street', '555-1234'),
 (2, 'Mayank', 'Smith', 'mayank.smith@example.com', 'password456', '456 Oak Avenue', '555-5678'),
@@ -149,27 +150,32 @@ INSERT INTO Customers (CustomerID, FirstName, LastName, Email, Password, Address
 (8, 'Frank', 'Moore', 'frank.moore@example.com', 'password505', '505 Aspen Way', '555-0987'),
 (9, 'Grace', 'Taylor', 'grace.taylor@example.com', 'password606', '606 Spruce Street', '555-2345'),
 (10, 'Hank', 'Anderson', 'hank.anderson@example.com', 'password707', '707 Willow Terrace', '555-6789');
-
+```
 ### Select all customers
+```sql
 SELECT * FROM Customers;
-
+```
 ### Select a specific customer by ID
+```sql
 SELECT * FROM Customers WHERE CustomerID = 1;
-
- ### Update query for a customer's email by using there customer Id.
+```
+### Update query for a customer's email by using there customer Id.
+```aql
 UPDATE Customers
 SET Email = 'john.doe@newexample.com'
 WHERE CustomerID = 1;
-
+```
 ### Delete a customer by ID
+```sql
 DELETE FROM Customers
 WHERE CustomerID = 10;
+```
 
 
 ## SQL Queries
 
 CASE 1:Power writers (authors) with more than X books in the same genre published within the last X years.
-
+```sql
 SELECT a.AuthorID, a.FirstName, a.LastName, b.Genre, COUNT(b.BookID) AS BookCount, b.ReleaseDate
 FROM Authors a 
 JOIN Books b ON a.AuthorID = b.AuthorID 
@@ -177,9 +183,9 @@ WHERE b.genre= 'Fantasy'
 AND b.ReleaseDate >= NOW() - INTERVAL '19 years'
 GROUP BY a.AuthorID, a.FirstName, a.LastName, b.Genre , b.ReleaseDate
 HAVING COUNT(b.BookID) > 0;
-
+```
 Case 2 : Loyal Customers who has spent more than X dollars in the last year.
-
+```sql
 SELECT
     c.CustomerID,
     c.FirstName,
@@ -191,9 +197,9 @@ WHERE o.OrderDate >= NOW() - INTERVAL '22 year'
 GROUP BY c.CustomerID, c.FirstName, c.LastName
 HAVING SUM(o.TotalAmount) > 10
 ORDER BY TotalSpent DESC;
-
+```
 Case 3:Well Reviewed books that has a better user rating than average.
-
+```sql
 SELECT 
     b.BookID,
     b.Title,
@@ -205,9 +211,9 @@ GROUP BY  b.BookID, b.Title, b.Genre
 HAVING  AVG(r.Rating) > (
         SELECT AVG(Rating) FROM Reviews
     );
-
+```
 Case 4 : The most popular genre by sales.
-
+```sql
 SELECT
     b.Genre,
     SUM(od.Quantity * od.Price) AS TotalSales
@@ -217,9 +223,9 @@ JOIN Orders o ON od.OrderID = o.OrderID
 GROUP BY b.Genre
 ORDER BY TotalSales DESC
 LIMIT 1;
-
+```
 case5: The 10 most recent posted reviews by Customers.
-
+```sql
 SELECT 
     r.ReviewID, 
     r.BookID, 
@@ -235,9 +241,9 @@ JOIN Customers c ON r.CustomerID = c.CustomerID
 JOIN Books b ON r.BookID = b.BookID 
 ORDER BY r.ReviewDate DESC 
 LIMIT 5;
-
+```
 ## Typescript Interface
-
+```sql
 import { Client } from 'pg';
 
 // creating Database connection configuration
@@ -344,6 +350,6 @@ const exampleUsage = async () => {
 };
 
 exampleUsage().catch(console.error);
-
+```
 
 
