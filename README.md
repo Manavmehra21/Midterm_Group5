@@ -235,4 +235,114 @@ JOIN Books b ON r.BookID = b.BookID
 ORDER BY r.ReviewDate DESC 
 LIMIT 5;
 
+## Typescript Interface
+
+import { Client } from 'pg';
+
+// creating Database connection configuration
+const client = new Client({
+  user: 'postgres',
+  host: 'localhost',
+  database: 'bookstore',
+  password: 'postgres',
+  port: 5432,
+});
+
+// Connecting to the database
+client.connect()
+  .then(() => console.log('Connected to the database'))
+  .catch(err => console.error('Connection error', err.stack));
+
+// initiating  TypeScript interface for a Book
+interface Book {
+  BookID: number;
+  Title: string;
+  ISBN: string;
+  Genre: string;
+  Format: 'Physical' | 'eBook' | 'Audiobook';
+  Price: number;
+  PublisherID: number;
+  AuthorID: number;
+  ReleaseDate: string; // Date in ISO format, e.g., 'YYYY-MM-DD'
+  Description: string;
+}
+
+// Refer below the Function to create a new book record in the database
+const createBook = async (newBook: Omit<Book, 'BookID'>): Promise<Book> => {
+  const res = await client.query(
+    `INSERT INTO Books (Title, ISBN, Genre, Format, Price, PublisherID, AuthorID, ReleaseDate, Description)
+     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+     RETURNING *`,
+    [
+      newBook.Title,
+      newBook.ISBN,
+      newBook.Genre,
+      newBook.Format,
+      newBook.Price,
+      newBook.PublisherID,
+      newBook.AuthorID,
+      newBook.ReleaseDate,
+      newBook.Description,
+    ]
+  );
+  return res.rows[0];
+};
+
+// Function to read a book from the database by ID
+const readBook = async (bookID: number): Promise<Book | null> => {
+  const res = await client.query(`SELECT * FROM Books WHERE BookID = $1`, [bookID]);
+  return res.rows[0] || null;
+};
+
+// Function to update a book
+const updateBook = async (bookID: number, updatedFields: Partial<Omit<Book, 'BookID'>>): Promise<Book | null> => {
+  const fields = Object.keys(updatedFields);
+  const values = Object.values(updatedFields);
+  const setClause = fields.map((field, idx) => `${field} = $${idx + 1}`).join(', ');
+
+  const res = await client.query(
+    `UPDATE Books SET ${setClause} WHERE BookID = $${fields.length + 1} RETURNING *`,
+    [...values, bookID]
+  );
+  return res.rows[0] || null;
+};
+
+// Function to delete a book from the database by ID
+const deleteBook = async (bookID: number): Promise<boolean> => {
+  const res = await client.query(`DELETE FROM Books WHERE BookID = $1`, [bookID]);
+  return res.rowCount > 0;
+};
+
+// Example usage
+const exampleUsage = async () => {
+  const newBook: Omit<Book, 'BookID'> = {
+    Title: 'Example Book',
+    ISBN: '123-456-789',
+    Genre: 'Fiction',
+    Format: 'Physical',
+    Price: 19.99,
+    PublisherID: 1,
+    AuthorID: 1,
+    ReleaseDate: '2024-01-01',
+    Description: 'An example book description',
+  };
+
+  const createdBook = await createBook(newBook);
+  console.log('Created Book:', createdBook);
+
+  const fetchedBook = await readBook(createdBook.BookID);
+  console.log('Fetched Book:', fetchedBook);
+
+  const updatedBook = await updateBook(createdBook.BookID, { Price: 24.99 });
+  console.log('Updated Book:', updatedBook);
+
+  const isDeleted = await deleteBook(createdBook.BookID);
+  console.log('Deleted Book:', isDeleted);
+
+  await client.end();
+};
+
+exampleUsage().catch(console.error);
+
+
 
