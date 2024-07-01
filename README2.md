@@ -2,9 +2,11 @@
 
 ## Team Duties
 
-> Owulu Amarachukwu - [Duty description]
->Sharma Mayank- [Duty description]
->Mehra Manav- [Duty description]
+
+>Database Design: Manav Mehra
+>Database Implementation: Mayank Sharma
+>Query Development: Emmanuella Owulu Amara
+>Typescript Interface: Manav, Mayank,Amara
 
 ## Tables and Attributes
 
