@@ -243,113 +243,95 @@ ORDER BY r.ReviewDate DESC
 LIMIT 5;
 ```
 ## Typescript Interface
-```sql
-import { Client } from 'pg';
 
-// creating Database connection configuration
-const client = new Client({
-  user: 'postgres',
-  host: 'localhost',
-  database: 'bookstore',
-  password: 'postgres',
-  port: 5432,
-});
+```typescript
+interface Customer {
+    customerID: number; // Primary key
+    Firstname: string;
+    Lastname: string; 
+    Email: string;
+    Password: string;
+    Address: string;
+    PhoneNumber: number;
+}
+const customers: Customer[] = [];
 
-// Connecting to the database
-client.connect()
-  .then(() => console.log('Connected to the database'))
-  .catch(err => console.error('Connection error', err.stack));
-
-// initiating  TypeScript interface for a Book
-interface Book {
-  BookID: number;
-  Title: string;
-  ISBN: string;
-  Genre: string;
-  Format: 'Physical' | 'eBook' | 'Audiobook';
-  Price: number;
-  PublisherID: number;
-  AuthorID: number;
-  ReleaseDate: string; // Date in ISO format, e.g., 'YYYY-MM-DD'
-  Description: string;
+// Function to create a new customer
+function createCustomer(customer: Customer): void {
+    customers.push(customer);
+    console.log(`Customer with ID ${customer.customerID} created successfully.`);
 }
 
-// Refer below the Function to create a new book record in the database
-const createBook = async (newBook: Omit<Book, 'BookID'>): Promise<Book> => {
-  const res = await client.query(
-    `INSERT INTO Books (Title, ISBN, Genre, Format, Price, PublisherID, AuthorID, ReleaseDate, Description)
-     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
-     RETURNING *`,
-    [
-      newBook.Title,
-      newBook.ISBN,
-      newBook.Genre,
-      newBook.Format,
-      newBook.Price,
-      newBook.PublisherID,
-      newBook.AuthorID,
-      newBook.ReleaseDate,
-      newBook.Description,
-    ]
-  );
-  return res.rows[0];
+// Function to read a customer by ID
+function readCustomer(customerID: number): Customer | undefined {
+    return customers.find(customer => customer.customerID === customerID);
+}
+
+// Function to update a customer
+function updateCustomer(updatedCustomer: Customer): void {
+    const index = customers.findIndex(customer => customer.customerID === updatedCustomer.customerID);
+    if (index !== -1) {
+        customers[index] = updatedCustomer;
+        console.log(`Customer with ID ${updatedCustomer.customerID} updated successfully.`);
+    } else {
+        console.error(`Customer with ID ${updatedCustomer.customerID} not found.`);
+    }
+}
+
+// Function to delete a customer by ID
+function deleteCustomer(customerID: number): void {
+    const index = customers.findIndex(customer => customer.customerID === customerID);
+    if (index !== -1) {
+        customers.splice(index, 1);
+        console.log(`Customer with ID ${customerID} deleted successfully.`);
+    } else {
+        console.error(`Customer with ID ${customerID} not found.`);
+    }
+}
+
+//USAGE
+const newCustomer: Customer = {
+    customerID: 1001; 
+    Firstname: John;
+    Lastname: Cena; 
+    Email: john.cena@example.com;
+    Password: 123abc;
+    Address: 456 hickory street;
+    PhoneNumber: 84564854158;
 };
+createCustomer(newCustomer);
 
-// Function to read a book from the database by ID
-const readBook = async (bookID: number): Promise<Book | null> => {
-  const res = await client.query(`SELECT * FROM Books WHERE BookID = $1`, [bookID]);
-  return res.rows[0] || null;
+// Read a customer
+const customer = readCustomer(1001);
+if (customer) {
+    console.log(`Read customer:`, customer);
+} else {
+    console.error('Customer not found.');
+}
+
+// Update an existing customer
+const updatedCustomer: Customer = {
+     customerID: 1001; 
+    Firstname: John;
+    Lastname: Cena; 
+    Email: john.cena@newexample.com;
+    Password: 123abc;
+    Address: 456 hickory street;
+    PhoneNumber: 84564854158;
 };
+updateCustomer(updatedCustomer);
 
-// Function to update a book
-const updateBook = async (bookID: number, updatedFields: Partial<Omit<Book, 'BookID'>>): Promise<Book | null> => {
-  const fields = Object.keys(updatedFields);
-  const values = Object.values(updatedFields);
-  const setClause = fields.map((field, idx) => `${field} = $${idx + 1}`).join(', ');
+// Delete a customer
+deleteCustomer(1001);
 
-  const res = await client.query(
-    `UPDATE Books SET ${setClause} WHERE BookID = $${fields.length + 1} RETURNING *`,
-    [...values, bookID]
-  );
-  return res.rows[0] || null;
-};
+// Try to read the deleted customer
+const deletedCustomer = readCustomer(1001);
+if (deletedCustomer) {
+    console.log(`Read customer:`, deletedCustomer);
+} else {
+    console.error('Customer not found.');
+}
 
-// Function to delete a book from the database by ID
-const deleteBook = async (bookID: number): Promise<boolean> => {
-  const res = await client.query(`DELETE FROM Books WHERE BookID = $1`, [bookID]);
-  return res.rowCount > 0;
-};
-
-// Example usage
-const exampleUsage = async () => {
-  const newBook: Omit<Book, 'BookID'> = {
-    Title: 'Example Book',
-    ISBN: '123-456-789',
-    Genre: 'Fiction',
-    Format: 'Physical',
-    Price: 19.99,
-    PublisherID: 1,
-    AuthorID: 1,
-    ReleaseDate: '2024-01-01',
-    Description: 'An example book description',
-  };
-
-  const createdBook = await createBook(newBook);
-  console.log('Created Book:', createdBook);
-
-  const fetchedBook = await readBook(createdBook.BookID);
-  console.log('Fetched Book:', fetchedBook);
-
-  const updatedBook = await updateBook(createdBook.BookID, { Price: 24.99 });
-  console.log('Updated Book:', updatedBook);
-
-  const isDeleted = await deleteBook(createdBook.BookID);
-  console.log('Deleted Book:', isDeleted);
-
-  await client.end();
-};
-
-exampleUsage().catch(console.error);
 ```
 
 
