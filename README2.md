@@ -3,10 +3,10 @@
 ## Team Duties
 
 
->Database Design: Manav Mehra
->Database Implementation: Mayank Sharma
->Query Development: Emmanuella Owulu Amara
->Typescript Interface: Manav, Mayank,Amara
+### Database Design: Manav Mehra 
+### Database Implementation: Mayank Sharma
+### Query Development: Emmanuella Owulu Amara
+### Typescript Interface: Manav, Mayank,Amara
 
 ## Tables and Attributes
 
