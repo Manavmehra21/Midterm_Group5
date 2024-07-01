@@ -311,13 +311,13 @@ if (customer) {
 
 // Update an existing customer
 const updatedCustomer: Customer = {
-     customerID: 1001; 
-    Firstname: John;
-    Lastname: Cena; 
-    Email: john.cena@newexample.com;
-    Password: 123abc;
-    Address: 456 hickory street;
-    PhoneNumber: 84564854158;
+     customerID: 1001,
+    Firstname: John,
+    Lastname: Cena,
+    Email: john.cena@newexample.com,
+    Password: 123abc,
+    Address: 456 hickory street,
+    PhoneNumber: 84564854158
 };
 updateCustomer(updatedCustomer);
 
