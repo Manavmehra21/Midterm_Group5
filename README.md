@@ -246,13 +246,13 @@ LIMIT 5;
 
 ```typescript
 interface Customer {
-    customerID: number; // Primary key
-    Firstname: string;
-    Lastname: string; 
-    Email: string;
-    Password: string;
-    Address: string;
-    PhoneNumber: number;
+    customerID: number,
+    Firstname: string,
+    Lastname: string,
+    Email: string,
+    Password: string,
+    Address: string,
+    PhoneNumber: number,
 }
 const customers: Customer[] = [];
 
@@ -291,13 +291,13 @@ function deleteCustomer(customerID: number): void {
 
 //USAGE
 const newCustomer: Customer = {
-    customerID: 1001; 
-    Firstname: John;
-    Lastname: Cena; 
-    Email: john.cena@example.com;
-    Password: 123abc;
-    Address: 456 hickory street;
-    PhoneNumber: 84564854158;
+    customerID: 1001,
+    Firstname: John,
+    Lastname: Cena, 
+    Email: john.cena@example.com,
+    Password: 123abc,
+    Address: 456 hickory street,
+    PhoneNumber: 8456485415
 };
 createCustomer(newCustomer);
 
