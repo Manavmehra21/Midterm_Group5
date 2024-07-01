@@ -64,7 +64,7 @@
 - `Price` DECIMAL(10, 2),  
 
 ### Sql Queries for creating above mentioned tables in Database
---Sql
+```sql
 
 CREATE TABLE Customers ( 
 CustomerID INT PRIMARY KEY,
@@ -134,7 +134,7 @@ Price DECIMAL(10, 2),
 FOREIGN KEY (OrderID) REFERENCES Orders(OrderID), 
 FOREIGN KEY (BookID) REFERENCES Books(BookID)
  );
-
+```
 ## DDL/DML queries for one of the table(Customers).
 
 ### Insert query
