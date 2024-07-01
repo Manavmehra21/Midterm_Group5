@@ -64,6 +64,7 @@
 - `Price` DECIMAL(10, 2),  
 
 ### Sql Queries for creating above mentioned tables in Database
+--Sql
 
 CREATE TABLE Customers ( 
 CustomerID INT PRIMARY KEY,
