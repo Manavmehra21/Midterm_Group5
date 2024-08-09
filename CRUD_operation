@@ -1,0 +1,31 @@
+### unit test
+
+import { AuthorService } from "./AuthorService";
+import { Author } from "../entity/Author";
+import { createConnection, getConnection } from "typeorm";
+
+describe("AuthorService", () => {
+  let authorService: AuthorService;
+
+  beforeAll(async () => {
+    await createConnection();
+    authorService = new AuthorService();
+  });
+
+  afterAll(async () => {
+    await getConnection().close();
+  });
+
+  it("should create an author", async () => {
+    const author = new Author();
+    author.name = "Test Author";
+    author.genres = "Fiction";
+    author.booksPublished = 10;
+    author.booksPublishedInLastXYears = 5;
+
+    const result = await authorService.create(author);
+    expect(result).toHaveProperty("id");
+  });
+
+  // Add more tests for read, update, and delete
+});
