@@ -289,7 +289,7 @@ LIMIT 10;
 ```
 
 # Create a Typescript interface that will allow modification to a table. 
-  ``` ```
+  ``` export type { default } from "./persistenceService"; ```
 ```  create: (name: string) => void;
   // drop: (name: string) => void;
   insert: <T = unknown>(content: T, location: string) => void;
