@@ -243,93 +243,16 @@ ORDER BY r.ReviewDate DESC
 LIMIT 5;
 ```
 ## Typescript Interface
-
-```typescript
-interface Customer {
-    customerID: number,
-    Firstname: string,
-    Lastname: string,
-    Email: string,
-    Password: string,
-    Address: string,
-    PhoneNumber: number,
-}
-const customers: Customer[] = [];
-
-// Function to create a new customer
-function createCustomer(customer: Customer): void {
-    customers.push(customer);
-    console.log(`Customer with ID ${customer.customerID} created successfully.`);
-}
-
-// Function to read a customer by ID
-function readCustomer(customerID: number): Customer | undefined {
-    return customers.find(customer => customer.customerID === customerID);
-}
-
-// Function to update a customer
-function updateCustomer(updatedCustomer: Customer): void {
-    const index = customers.findIndex(customer => customer.customerID === updatedCustomer.customerID);
-    if (index !== -1) {
-        customers[index] = updatedCustomer;
-        console.log(`Customer with ID ${updatedCustomer.customerID} updated successfully.`);
-    } else {
-        console.error(`Customer with ID ${updatedCustomer.customerID} not found.`);
-    }
-}
-
-// Function to delete a customer by ID
-function deleteCustomer(customerID: number): void {
-    const index = customers.findIndex(customer => customer.customerID === customerID);
-    if (index !== -1) {
-        customers.splice(index, 1);
-        console.log(`Customer with ID ${customerID} deleted successfully.`);
-    } else {
-        console.error(`Customer with ID ${customerID} not found.`);
-    }
-}
-
-//USAGE
-const newCustomer: Customer = {
-    customerID: 1001,
-    Firstname: John,
-    Lastname: Cena, 
-    Email: john.cena@example.com,
-    Password: 123abc,
-    Address: 456 hickory street,
-    PhoneNumber: 8456485415
-};
-createCustomer(newCustomer);
-
-// Read a customer
-const customer = readCustomer(1001);
-if (customer) {
-    console.log(`Read customer:`, customer);
-} else {
-    console.error('Customer not found.');
-}
-
-// Update an existing customer
-const updatedCustomer: Customer = {
-     customerID: 1001,
-    Firstname: John,
-    Lastname: Cena,
-    Email: john.cena@newexample.com,
-    Password: 123abc,
-    Address: 456 hickory street,
-    PhoneNumber: 84564854158
-};
-updateCustomer(updatedCustomer);
-
-// Delete a customer
-deleteCustomer(1001);
-
-// Try to read the deleted customer
-const deletedCustomer = readCustomer(1001);
-if (deletedCustomer) {
-    console.log(`Read customer:`, deletedCustomer);
-} else {
-    console.error('Customer not found.');
+index.ts file 
+```
+export type { default } from "./persistenceService";
+```
+```export default interface PersistenceService {
+  create: (name: string) => void;
+  // drop: (name: string) => void;
+  insert: <T = unknown>(content: T, location: string) => void;
+  // update: <T = unknown>(content: T, location: string) => void;
+  // delete: <T = unknown>(content: T, location: string) => void;
 }
 
 ```
