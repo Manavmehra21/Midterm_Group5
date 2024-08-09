@@ -254,9 +254,11 @@ export type { default } from "./persistenceService";
   // update: <T = unknown>(content: T, location: string) => void;
   // delete: <T = unknown>(content: T, location: string) => void;
 }
+
+
+```
 !Alt Text
 ![ER_diagram (1)](https://github.com/user-attachments/assets/689a56ae-0117-4b7d-9642-3a6bedd30dcd)
 
-```
 
 
