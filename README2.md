@@ -289,91 +289,11 @@ LIMIT 10;
 ```
 
 # Create a Typescript interface that will allow modification to a table. 
-## Customer Table Management
-
-
-The `Customer` interface defines the structure of a customer object, ensuring consistency when manipulating customer data.
-
-```typescript
-interface Customer {
-    customer_id: number; // Primary key
-    name: string;
-    email: string;
-    address: string;
-    total_spent: number;
+  ``` ```
+```  create: (name: string) => void;
+  // drop: (name: string) => void;
+  insert: <T = unknown>(content: T, location: string) => void;
+  // update: <T = unknown>(content: T, location: string) => void;
+  // delete: <T = unknown>(content: T, location: string) => void;
 }
-const customers: Customer[] = [];
-
-// Function to create a new customer
-function createCustomer(customer: Customer): void {
-    customers.push(customer);
-    console.log(`Customer with ID ${customer.customer_id} created successfully.`);
-}
-
-// Function to read a customer by ID
-function readCustomer(customer_id: number): Customer | undefined {
-    return customers.find(customer => customer.customer_id === customer_id);
-}
-
-// Function to update a customer
-function updateCustomer(updatedCustomer: Customer): void {
-    const index = customers.findIndex(customer => customer.customer_id === updatedCustomer.customer_id);
-    if (index !== -1) {
-        customers[index] = updatedCustomer;
-        console.log(`Customer with ID ${updatedCustomer.customer_id} updated successfully.`);
-    } else {
-        console.error(`Customer with ID ${updatedCustomer.customer_id} not found.`);
-    }
-}
-
-// Function to delete a customer by ID
-function deleteCustomer(customer_id: number): void {
-    const index = customers.findIndex(customer => customer.customer_id === customer_id);
-    if (index !== -1) {
-        customers.splice(index, 1);
-        console.log(`Customer with ID ${customer_id} deleted successfully.`);
-    } else {
-        console.error(`Customer with ID ${customer_id} not found.`);
-    }
-}
-
-//USAGE
-const newCustomer: Customer = {
-    customer_id: 1,
-    name: 'John Doe',
-    email: 'john.doe@example.com',
-    address: '123 Main St, Anytown, USA',
-    total_spent: 200.00
-};
-createCustomer(newCustomer);
-
-// Read a customer
-const customer = readCustomer(1);
-if (customer) {
-    console.log(`Read customer:`, customer);
-} else {
-    console.error('Customer not found.');
-}
-
-// Update an existing customer
-const updatedCustomer: Customer = {
-    customer_id: 1,
-    name: 'John Doe',
-    email: 'john.doe@example.com',
-    address: '123 Main St, Anytown, USA',
-    total_spent: 250.00
-};
-updateCustomer(updatedCustomer);
-
-// Delete a customer
-deleteCustomer(1);
-
-// Try to read the deleted customer
-const deletedCustomer = readCustomer(1);
-if (deletedCustomer) {
-    console.log(`Read customer:`, deletedCustomer);
-} else {
-    console.error('Customer not found.');
-}
-
 ```
